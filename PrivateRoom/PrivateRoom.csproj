@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PrivateRoom</RootNamespace>
     <AssemblyName>PrivateRoom</AssemblyName>
-    <DefaultLanguage>zh-TW</DefaultLanguage>
+    <DefaultLanguage>zh-Hant-TW</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17763.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
