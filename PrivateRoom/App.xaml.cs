@@ -1,6 +1,8 @@
 ﻿using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Foundation;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -12,6 +14,8 @@ namespace PrivateRoom
     /// </summary>
     sealed partial class App : Application
     {
+        private readonly Size viewSize = new Size(640.0, 480.0);
+
         /// <summary>
         /// 初始化單一應用程式物件。這是第一行執行之撰寫程式碼，
         /// 而且其邏輯相當於 main() 或 WinMain()。
@@ -49,8 +53,11 @@ namespace PrivateRoom
                 Window.Current.Content = rootFrame;
             }
 
-            if (e.PrelaunchActivated == false)
+            if (!e.PrelaunchActivated)
             {
+                ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+                ApplicationView.PreferredLaunchViewSize = viewSize;
+
                 if (rootFrame.Content == null)
                 {
                     // 在巡覽堆疊未還原時，巡覽至第一頁，
@@ -58,6 +65,7 @@ namespace PrivateRoom
                     // 參數
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
+
                 // 確定目前視窗是作用中
                 Window.Current.Activate();
             }

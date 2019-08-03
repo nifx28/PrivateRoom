@@ -4,8 +4,41 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Win10ver1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
+    xmlns:Win10ver1803="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 6)"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid>
+        <NavigationView
+            x:Name="NavView"
+            Win10ver1809:PaneDisplayMode="Top"
+            Loaded="NavView_Loaded"
+            ItemInvoked="NavView_ItemInvoked"
+            Win10ver1803:BackRequested="NavView_BackRequested">
+            <NavigationView.MenuItems>
+                <NavigationViewItemHeader x:Name="Header" />
+                <NavigationViewItem Tag="home" Icon="Home" Content="首頁" FocusVisualPrimaryThickness="0" />
+                <NavigationViewItem Tag="links" Icon="Link" Content="連結" />
+                <NavigationViewItemSeparator />
+            </NavigationView.MenuItems>
+            <NavigationView.AutoSuggestBox>
+                <AutoSuggestBox Width="160" MaxWidth="160" QueryIcon="Find" />
+            </NavigationView.AutoSuggestBox>
+            <ScrollViewer>
+                <Frame x:Name="ContentFrame" Padding="12,0,12,24" />
+            </ScrollViewer>
+        </NavigationView>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>
