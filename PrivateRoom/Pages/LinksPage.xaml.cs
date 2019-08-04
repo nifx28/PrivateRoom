@@ -7,7 +7,7 @@ namespace PrivateRoom.Pages
     /// </summary>
     public sealed partial class LinksPage : Page
     {
-        public string Header { get; private set; } = "連結";
+        public string Header { get; private set; } = "常用連結";
 
         public LinksPage()
         {

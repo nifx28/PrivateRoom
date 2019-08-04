@@ -7,7 +7,7 @@ namespace PrivateRoom.SubPages
     /// </summary>
     public sealed partial class HomeActivatePage : Page
     {
-        public string Header { get; private set; } = "啟動";
+        public string Header { get; private set; } = "啟動連線";
 
         public HomeActivatePage()
         {

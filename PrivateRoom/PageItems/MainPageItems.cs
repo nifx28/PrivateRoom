@@ -20,13 +20,15 @@ namespace PrivateRoom
         private readonly PageItems _pages = new PageItems
         {
             ("home",  Symbol.Home, "首頁", typeof(HomePage), new SubPageItems {
-                ("home_activate",  Symbol.GoToStart, "啟動", typeof(HomeActivatePage)),
+                ("home_activate", Symbol.GoToStart, "啟動", typeof(HomeActivatePage)),
             }),
             ("links", Symbol.Link, "連結", typeof(LinksPage), null),
         };
 
         private void CreateNavMenus()
         {
+            (NavView.SettingsItem as NavigationViewItem).FocusVisualPrimaryThickness = new Thickness(.0);
+
             foreach (var page in _pages)
             {
                 NavView.MenuItems.Add(new NavigationViewItem

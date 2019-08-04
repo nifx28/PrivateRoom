@@ -8,6 +8,7 @@ namespace PrivateRoom.Pages
     public sealed partial class SettingsPage : Page
     {
         public string Header { get; private set; } = "設定";
+        public string Title { get; private set; } = "進行配置";
 
         public SettingsPage()
         {
