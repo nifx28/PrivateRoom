@@ -78,7 +78,7 @@ namespace PrivateRoom
         /// <param name="e">有關巡覽失敗的詳細資料</param>
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
-            throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
+            throw new Exception("無法載入頁面 " + e.SourcePageType.FullName);
         }
 
         /// <summary>

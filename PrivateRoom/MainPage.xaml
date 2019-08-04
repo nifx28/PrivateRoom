@@ -17,15 +17,12 @@
             Win10ver1803:BackRequested="NavView_BackRequested">
             <NavigationView.MenuItems>
                 <NavigationViewItemHeader x:Name="Header" />
-                <NavigationViewItem Tag="home" Icon="Home" Content="首頁" FocusVisualPrimaryThickness="0" />
-                <NavigationViewItem Tag="links" Icon="Link" Content="連結" />
-                <NavigationViewItemSeparator />
             </NavigationView.MenuItems>
             <NavigationView.AutoSuggestBox>
                 <AutoSuggestBox Width="160" MaxWidth="160" QueryIcon="Find" />
             </NavigationView.AutoSuggestBox>
             <ScrollViewer>
-                <Frame x:Name="ContentFrame" Padding="12,0,12,24" />
+                <Frame x:Name="ContentFrame" Padding="12,0,12,24" NavigationFailed="ContentFrame_NavigationFailed" />
             </ScrollViewer>
         </NavigationView>
         <VisualStateManager.VisualStateGroups>

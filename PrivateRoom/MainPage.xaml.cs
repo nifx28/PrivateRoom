@@ -1,6 +1,5 @@
 ﻿using PrivateRoom.Pages;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Windows.System;
 using Windows.UI.Xaml;
@@ -16,12 +15,7 @@ namespace PrivateRoom
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private readonly List<(string Tag, Type Page)> _pages = new List<(string Tag, Type Page)>
-        {
-            ("settings", typeof(SettingsPage)),
-            ("home",     typeof(HomePage)),
-            ("links",    typeof(LinksPage)),
-        };
+        public int MenuCount { get; private set; }
 
         public MainPage()
         {
@@ -30,6 +24,8 @@ namespace PrivateRoom
 
         private void NavView_Loaded(object sender, RoutedEventArgs e)
         {
+            CreateNavMenus();
+
             ContentFrame.Navigated += OnNavigated;
             NavView_Navigate("home", new EntranceNavigationTransitionInfo());
 
@@ -59,14 +55,37 @@ namespace PrivateRoom
             OnBackRequested();
         }
 
-        private void NavView_Navigate(string navItemTag, NavigationTransitionInfo transInfo)
+        private void NavView_Navigate(string tag, NavigationTransitionInfo info)
         {
-            var item = _pages.FirstOrDefault(p => p.Tag.Equals(navItemTag));
-            Type _page = item.Page;
+            Type _page = null;
+
+            if (tag == "settings")
+            {
+                _page = typeof(SettingsPage);
+            }
+            else
+            {
+                var subTag = tag.Split('_');
+
+                if (subTag.Length > 1)
+                {
+                    var item = _pages.FirstOrDefault(p => p.Tag.Equals(subTag[0]));
+
+                    if (!(item.Page is null) && item.SubPages != null)
+                    {
+                        var subItem = item.SubPages.FirstOrDefault(p => p.Tag.Equals(tag));
+                        _page = subItem.Page;
+                    }
+                }
+                else
+                {
+                    _page = _pages.FirstOrDefault(p => p.Tag.Equals(tag)).Page;
+                }
+            }
 
             if (!(_page is null) && !Type.Equals(ContentFrame.CurrentSourcePageType, _page))
             {
-                ContentFrame.Navigate(_page, null, transInfo);
+                ContentFrame.Navigate(_page, null, info);
             }
         }
 
@@ -76,6 +95,8 @@ namespace PrivateRoom
 
             if (ContentFrame.SourcePageType == typeof(SettingsPage))
             {
+                CreateNavSubMenus();
+
                 NavView.SelectedItem = NavView.SettingsItem as NavigationViewItem;
                 Header.Content = (ContentFrame.Content as SettingsPage)?.Header;
                 Header.Margin = new Thickness(.0, .0, 12.0, .0);
@@ -83,7 +104,29 @@ namespace PrivateRoom
             else if (ContentFrame.SourcePageType != null)
             {
                 var item = _pages.FirstOrDefault(p => p.Page == e.SourcePageType);
-                NavView.SelectedItem = NavView.MenuItems.OfType<NavigationViewItem>().First(n => n.Tag.Equals(item.Tag));
+
+                if (item.Page is null)
+                {
+                    var _subPages = _pages.Where(p => p.SubPages != null);
+
+                    foreach (var subItem in _subPages)
+                    {
+                        var subPage = subItem.SubPages.FirstOrDefault(p => p.Page == e.SourcePageType);
+
+                        if (!(subPage.Page is null))
+                        {
+                            item.Tag = subPage.Tag;
+                            break;
+                        }
+                    }
+                }
+
+                CreateNavSubMenus(item.Tag.Split('_')[0]);
+
+                NavView.SelectedItem = NavView.MenuItems
+                    .OfType<NavigationViewItem>()
+                    .First(n => n.Tag.Equals(item.Tag));
+
                 Header.Content = null;
                 Header.Margin = new Thickness();
             }
@@ -107,6 +150,11 @@ namespace PrivateRoom
 
             ContentFrame.GoBack();
             return true;
+        }
+
+        private void ContentFrame_NavigationFailed(object sender, NavigationFailedEventArgs e)
+        {
+            throw new Exception("無法載入頁面 " + e.SourcePageType.FullName);
         }
     }
 }
