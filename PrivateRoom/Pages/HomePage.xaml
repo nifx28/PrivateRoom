@@ -7,26 +7,33 @@
     xmlns:local="using:PrivateRoom.Models"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    Loaded="Page_Loaded">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
+    Loaded="Page_LoadedAsync">
+    <StackPanel>
         <TextBlock FontSize="18" Text="{x:Bind Header}" Margin="12,18" />
-        <Grid Grid.Row="2">
-            <ListView ItemsSource="{x:Bind Items}">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="local:ProcessInfo">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding ExecutableFileName}" Margin="0,0,12,0" />
-                            <TextBlock Text="{Binding ProcessId}" Margin="0,0,12,0" />
-                            <TextBlock Text="{Binding CpuUsage}" Margin="0,0,12,0" />
-                            <TextBlock Text="{Binding MemoryUsage}" Margin="0,0,12,0" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
-    </Grid>
+        <ListView ItemsSource="{x:Bind Items}">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="local:AppInfo">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Id}" Margin="0,0,12,0" />
+                        <TextBlock Text="{Binding PackageFamilyName}" Margin="0,0,12,0" />
+                        <TextBlock Text="{Binding Description}" Margin="0,0,12,0" />
+                        <TextBlock Text="{Binding DisplayName}" Margin="0,0,12,0" />
+                        <TextBlock Text="{Binding AppUserModelId}" Margin="0,0,12,0" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ListView ItemsSource="{x:Bind ProcessItems}">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="local:ProcessInfo">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding ExecutableFileName}" Margin="0,0,12,0" />
+                        <TextBlock Text="{Binding ProcessId}" Margin="0,0,12,0" />
+                        <TextBlock Text="{Binding CpuUsage}" Margin="0,0,12,0" />
+                        <TextBlock Text="{Binding MemoryUsage}" Margin="0,0,12,0" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackPanel>
 </Page>

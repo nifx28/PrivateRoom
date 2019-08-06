@@ -4,9 +4,32 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid>
         <TextBlock FontSize="18" Text="{x:Bind Title}" Margin="12,18" />
+        <controls:TabView>
+            <controls:TabView.ItemHeaderTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <Run Text="{Binding Value}"/>
+                        <Run Text=": "/>
+                        <Run Text="{Binding MyText}"/>
+                    </TextBlock>
+                </DataTemplate>
+            </controls:TabView.ItemHeaderTemplate>
+            <controls:TabView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Margin="8">
+                            <Run Text="Tab Value: "/>
+                            <Run Text="{Binding Value}" />
+                        </TextBlock>
+                        <TextBlock Margin="8,0,0,0" Text="Some other shared content..." />
+                    </StackPanel>
+                </DataTemplate>
+            </controls:TabView.ItemTemplate>
+        </controls:TabView>
     </Grid>
 </Page>

@@ -1,5 +1,7 @@
 ﻿using PrivateRoom.Models;
+using System;
 using System.Collections.ObjectModel;
+using Windows.System;
 using Windows.System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -13,18 +15,31 @@ namespace PrivateRoom.Pages
     {
         public string Header { get; private set; } = "歡迎使用";
 
-        public ObservableCollection<ProcessInfo> Items { get; private set; } = new ObservableCollection<ProcessInfo>();
+        public ObservableCollection<AppInfo> Items { get; private set; } = new ObservableCollection<AppInfo>();
+        public ObservableCollection<ProcessInfo> ProcessItems { get; private set; } = new ObservableCollection<ProcessInfo>();
 
         public HomePage()
         {
             InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_LoadedAsync(object sender, RoutedEventArgs e)
         {
+            foreach (var info in await AppDiagnosticInfo.RequestInfoAsync())
+            {
+                Items.Add(new AppInfo
+                {
+                    Id = info.AppInfo.Id,
+                    PackageFamilyName = info.AppInfo.PackageFamilyName,
+                    Description = info.AppInfo.DisplayInfo.Description,
+                    DisplayName = info.AppInfo.DisplayInfo.DisplayName,
+                    AppUserModelId = info.AppInfo.AppUserModelId,
+                });
+            }
+
             foreach (var info in ProcessDiagnosticInfo.GetForProcesses())
             {
-                Items.Add(new ProcessInfo
+                ProcessItems.Add(new ProcessInfo
                 {
                     ExecutableFileName = info.ExecutableFileName,
                     ProcessId = $"{info.ProcessId}",
