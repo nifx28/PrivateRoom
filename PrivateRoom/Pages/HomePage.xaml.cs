@@ -27,25 +27,25 @@ namespace PrivateRoom.Pages
         {
             foreach (var info in await AppDiagnosticInfo.RequestInfoAsync())
             {
-                Items.Add(new AppInfo
+                /*Items.Add(new AppInfo
                 {
                     Id = info.AppInfo.Id,
                     PackageFamilyName = info.AppInfo.PackageFamilyName,
                     Description = info.AppInfo.DisplayInfo.Description,
                     DisplayName = info.AppInfo.DisplayInfo.DisplayName,
                     AppUserModelId = info.AppInfo.AppUserModelId,
-                });
+                });*/
             }
 
             foreach (var info in ProcessDiagnosticInfo.GetForProcesses())
             {
-                ProcessItems.Add(new ProcessInfo
+                /*ProcessItems.Add(new ProcessInfo
                 {
                     ExecutableFileName = info.ExecutableFileName,
                     ProcessId = $"{info.ProcessId}",
                     CpuUsage = $"{info.CpuUsage.GetReport().UserTime:hh':'mm':'ss}",
                     MemoryUsage = $"{info.MemoryUsage.GetReport().WorkingSetSizeInBytes:N0}",
-                });
+                });*/
             }
         }
     }
